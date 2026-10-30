@@ -112,6 +112,10 @@ The package will ship as:
 The detailed control ladder is in
 [`hidgate-poc/docs/kernel-control.md`](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/kernel-control.md).
 
+Latest result: `jpegclose` (close the userclient during a sync decode)
+reproduces the `far=0x308` UAF **without Camera**. The paired reclaim still
+misses the slot (`x12=0`), so S4 remains open.
+
 ## Supported devices (target)
 
 | Device | SoC | iOS | State |
