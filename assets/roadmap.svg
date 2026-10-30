@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Hidra roadmap: Q2 2027 closed beta, Q3 2027 public beta">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05070d"/>
+      <stop offset="1" stop-color="#0a101a"/>
+    </linearGradient>
+    <linearGradient id="timeline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#27c93f"/>
+      <stop offset="0.35" stop-color="#ff9f43"/>
+      <stop offset="0.7" stop-color="#58a6ff"/>
+      <stop offset="1" stop-color="#ff4d4d"/>
+    </linearGradient>
+    <linearGradient id="target" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a0b12"/>
+      <stop offset="1" stop-color="#16070b"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="420" fill="url(#bg)"/>
+  <g stroke="#162336" stroke-opacity="0.55" stroke-width="1">
+    <path d="M0 84 H1280 M0 168 H1280 M0 252 H1280 M0 336 H1280"/>
+    <path d="M80 0 V420 M160 0 V420 M240 0 V420 M320 0 V420 M400 0 V420 M480 0 V420 M560 0 V420 M640 0 V420 M720 0 V420 M800 0 V420 M880 0 V420 M960 0 V420 M1040 0 V420 M1120 0 V420 M1200 0 V420"/>
+  </g>
+
+  <text x="64" y="54" fill="#f4f7fb" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="28" font-weight="700">Release roadmap</text>
+  <text x="64" y="80" fill="#7f93a8" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="14">research estimate · not a promise · dates move if a gate fails</text>
+
+  <line x1="92" y1="236" x2="1190" y2="236" stroke="#1c2a3c" stroke-width="6" stroke-linecap="round"/>
+  <line x1="92" y1="236" x2="1100" y2="236" stroke="url(#timeline)" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
+  <g font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif">
+    <!-- M4 -->
+    <circle cx="196" cy="236" r="13" fill="#0d1a12" stroke="#ff9f43" stroke-width="4"/>
+    <text x="196" y="196" fill="#ff9f43" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" text-anchor="middle">M4 · NOV–DEC 2026</text>
+    <text x="196" y="216" fill="#f4f7fb" font-size="17" font-weight="700" text-anchor="middle">Write primitive</text>
+    <text x="196" y="282" fill="#8fa3b8" font-size="13" text-anchor="middle">double-free / refcount</text>
+    <text x="196" y="304" fill="#8f7a62" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="middle">confidence: medium-low</text>
+
+    <!-- M5 -->
+    <circle cx="416" cy="236" r="13" fill="#0a101a" stroke="#58a6ff" stroke-width="4"/>
+    <text x="416" y="196" fill="#58a6ff" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" text-anchor="middle">M5 · DEC 2026–FEB 2027</text>
+    <text x="416" y="216" fill="#f4f7fb" font-size="17" font-weight="700" text-anchor="middle">KASLR + PAC</text>
+    <text x="416" y="282" fill="#8fa3b8" font-size="13" text-anchor="middle">slide leak · signing path</text>
+    <text x="416" y="304" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="middle">confidence: low</text>
+
+    <!-- M6 -->
+    <circle cx="656" cy="236" r="13" fill="#0a101a" stroke="#58a6ff" stroke-width="4"/>
+    <text x="656" y="196" fill="#58a6ff" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" text-anchor="middle">M6 · MAR–MAY 2027</text>
+    <text x="656" y="216" fill="#f4f7fb" font-size="17" font-weight="700" text-anchor="middle">PPL / SPTM</text>
+    <text x="656" y="282" fill="#8fa3b8" font-size="13" text-anchor="middle">bootstrap prototype</text>
+    <text x="656" y="304" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="middle">confidence: low</text>
+
+    <!-- M7 -->
+    <circle cx="884" cy="236" r="13" fill="#0d1a12" stroke="#27c93f" stroke-width="4"/>
+    <text x="884" y="196" fill="#27c93f" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" text-anchor="middle">M7 · Q2 2027</text>
+    <text x="884" y="216" fill="#f4f7fb" font-size="17" font-weight="700" text-anchor="middle">Closed beta</text>
+    <text x="884" y="282" fill="#8fa3b8" font-size="13" text-anchor="middle">10/10 on the XR</text>
+    <text x="884" y="304" fill="#8f7a62" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="middle">confidence: low</text>
+
+    <!-- M8 target -->
+    <circle cx="1100" cy="236" r="18" fill="#ff4d4d" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="1100" cy="236" r="14" fill="#16070b" stroke="#ff4d4d" stroke-width="4"/>
+    <rect x="994" y="96" width="248" height="94" rx="14" fill="url(#target)" stroke="#ff4d4d" stroke-opacity="0.8"/>
+    <text x="1118" y="128" fill="#ff8a8a" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" text-anchor="middle">M8 · Q3 2027</text>
+    <text x="1118" y="154" fill="#fff1f1" font-size="21" font-weight="800" text-anchor="middle">Public beta</text>
+    <text x="1118" y="176" fill="#d8a6a6" font-size="12" text-anchor="middle">if M4–M6 pass</text>
+    <line x1="1118" y1="190" x2="1118" y2="218" stroke="#ff4d4d" stroke-width="2" stroke-dasharray="4 4"/>
+    <text x="1100" y="282" fill="#ffb3b3" font-size="13" text-anchor="middle">possible release window</text>
+    <text x="1100" y="304" fill="#8f7a62" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="middle">confidence: low</text>
+  </g>
+
+  <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12">
+    <circle cx="96" cy="366" r="6" fill="#27c93f"/>
+    <text x="112" y="370" fill="#8fa3b8">demonstrated</text>
+    <circle cx="250" cy="366" r="6" fill="#ff9f43"/>
+    <text x="266" y="370" fill="#8fa3b8">active</text>
+    <circle cx="350" cy="366" r="6" fill="#58a6ff"/>
+    <text x="366" y="370" fill="#8fa3b8">planned</text>
+    <circle cx="470" cy="366" r="6" fill="#ff4d4d"/>
+    <text x="486" y="370" fill="#8fa3b8">target window</text>
+  </g>
+  <text x="1190" y="370" fill="#4f6175" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="end">no public build until M7 passes</text>
+</svg>

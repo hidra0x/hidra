@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="470" viewBox="0 0 1280 470" role="img" aria-label="Hidra exploit chain: S0 entry to S8 package">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05070d"/>
+      <stop offset="1" stop-color="#0a101a"/>
+    </linearGradient>
+    <linearGradient id="done" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2a1f"/>
+      <stop offset="1" stop-color="#0a1a14"/>
+    </linearGradient>
+    <linearGradient id="active" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b1608"/>
+      <stop offset="1" stop-color="#1a0e06"/>
+    </linearGradient>
+    <linearGradient id="locked" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1420"/>
+      <stop offset="1" stop-color="#080c14"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#27c93f"/>
+      <stop offset="0.6" stop-color="#ff9f43"/>
+      <stop offset="1" stop-color="#58a6ff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="470" fill="url(#bg)"/>
+  <g stroke="#162336" stroke-opacity="0.55" stroke-width="1">
+    <path d="M0 80 H1280 M0 160 H1280 M0 240 H1280 M0 320 H1280 M0 400 H1280"/>
+    <path d="M80 0 V470 M160 0 V470 M240 0 V470 M320 0 V470 M400 0 V470 M480 0 V470 M560 0 V470 M640 0 V470 M720 0 V470 M800 0 V470 M880 0 V470 M960 0 V470 M1040 0 V470 M1120 0 V470 M1200 0 V470"/>
+  </g>
+
+  <text x="64" y="52" fill="#f4f7fb" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="28" font-weight="700">HIDRA exploit chain</text>
+  <text x="64" y="78" fill="#7f93a8" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="14">target: iPhone XR · A12 · iOS 18.7.2 · AppleJPEGDriver 7.6.9</text>
+
+  <!-- row 1 -->
+  <g font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif">
+    <g>
+      <rect x="64" y="110" width="252" height="112" rx="14" fill="url(#done)" stroke="#27c93f" stroke-opacity="0.7"/>
+      <text x="84" y="142" fill="#27c93f" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S0 · DONE</text>
+      <text x="84" y="170" fill="#eaf4ee" font-size="22" font-weight="700">Entry</text>
+      <text x="84" y="194" fill="#8fa3b8" font-size="13">AppleJPEG userclient + 0x58 ABI</text>
+    </g>
+    <g>
+      <rect x="376" y="110" width="252" height="112" rx="14" fill="url(#done)" stroke="#27c93f" stroke-opacity="0.7"/>
+      <text x="396" y="142" fill="#27c93f" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S1 · DONE</text>
+      <text x="396" y="170" fill="#eaf4ee" font-size="22" font-weight="700">Deferred UAF</text>
+      <text x="396" y="194" fill="#8fa3b8" font-size="13">JpegRequest read after free</text>
+    </g>
+    <g>
+      <rect x="688" y="110" width="252" height="112" rx="14" fill="url(#done)" stroke="#27c93f" stroke-opacity="0.7"/>
+      <text x="708" y="142" fill="#27c93f" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S2 · DONE</text>
+      <text x="708" y="170" fill="#eaf4ee" font-size="22" font-weight="700">Controlled free</text>
+      <text x="708" y="194" fill="#8fa3b8" font-size="13">kIOReturnTimeout · 10.001 s</text>
+    </g>
+    <g>
+      <rect x="1000" y="110" width="216" height="112" rx="14" fill="url(#done)" stroke="#27c93f" stroke-opacity="0.7"/>
+      <text x="1020" y="142" fill="#27c93f" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S3 · DONE</text>
+      <text x="1020" y="170" fill="#eaf4ee" font-size="22" font-weight="700">Reclaim</text>
+      <text x="1020" y="194" fill="#8fa3b8" font-size="13">same-type JpegRequest</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="url(#arrow)" stroke-width="2.5" stroke-linecap="round">
+    <path d="M316 166 H370 M322 160 L370 166 L322 172"/>
+    <path d="M628 166 H682 M634 160 L682 166 L634 172"/>
+    <path d="M940 166 H994 M946 160 L994 166 L946 172"/>
+    <path d="M1108 222 V282 M1102 228 L1108 282 L1114 228"/>
+  </g>
+
+  <!-- row 2 -->
+  <g font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif">
+    <g>
+      <rect x="64" y="310" width="252" height="112" rx="14" fill="url(#active)" stroke="#ff9f43" stroke-opacity="0.9"/>
+      <text x="84" y="342" fill="#ff9f43" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S4 · IN PROGRESS</text>
+      <text x="84" y="370" fill="#fff1e0" font-size="22" font-weight="700">Kernel primitive</text>
+      <text x="84" y="394" fill="#b99a7a" font-size="13">double-free · refcount · write</text>
+    </g>
+    <g>
+      <rect x="376" y="310" width="252" height="112" rx="14" fill="url(#locked)" stroke="#2b3a4d"/>
+      <text x="396" y="342" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S5 · NOT STARTED</text>
+      <text x="396" y="370" fill="#b7c6d6" font-size="22" font-weight="700">KASLR</text>
+      <text x="396" y="394" fill="#5f7186" font-size="13">kernel slide leak</text>
+    </g>
+    <g>
+      <rect x="688" y="310" width="252" height="112" rx="14" fill="url(#locked)" stroke="#2b3a4d"/>
+      <text x="708" y="342" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S6 · NOT STARTED</text>
+      <text x="708" y="370" fill="#b7c6d6" font-size="22" font-weight="700">PAC</text>
+      <text x="708" y="394" fill="#5f7186" font-size="13">arm64e · autda / blraa</text>
+    </g>
+    <g>
+      <rect x="1000" y="310" width="216" height="112" rx="14" fill="url(#locked)" stroke="#2b3a4d"/>
+      <text x="1020" y="342" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700">S7–S8 · LATER</text>
+      <text x="1020" y="370" fill="#b7c6d6" font-size="22" font-weight="700">PPL · package</text>
+      <text x="1020" y="394" fill="#5f7186" font-size="13">bootstrap + semi-tether</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#2b3a4d" stroke-width="2.5" stroke-linecap="round">
+    <path d="M316 366 H370 M322 360 L370 366 L322 372"/>
+    <path d="M628 366 H682 M634 360 L682 366 L634 372"/>
+    <path d="M940 366 H994 M946 360 L994 366 L946 372"/>
+  </g>
+
+  <text x="64" y="456" fill="#4f6175" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12">green: demonstrated on hardware · orange: active research · gray: not started</text>
+</svg>

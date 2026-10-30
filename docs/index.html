@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HIDRA — A12 / iOS 18.7.2 jailbreak research</title>
+  <meta name="description" content="Hidra is an A12 / iOS 18.7.2 jailbreak research project. Kernel entry via AppleJPEGDriver CVE-2026-20687. No public build yet.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --bg:#05070d;
+      --bg2:#080d16;
+      --panel:rgba(12,19,31,.72);
+      --panel2:rgba(9,14,24,.9);
+      --text:#e8eef7;
+      --muted:#8fa3b8;
+      --dim:#5f7186;
+      --red:#ff4d4d;
+      --orange:#ff9f43;
+      --green:#27c93f;
+      --blue:#58a6ff;
+      --border:rgba(88,166,255,.16);
+      --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+      --sans:"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(900px 500px at 85% 0%, rgba(255,77,77,.13), transparent 60%),
+        radial-gradient(900px 600px at 10% 40%, rgba(88,166,255,.10), transparent 60%),
+        linear-gradient(180deg,#05070d 0%,#070b12 45%,#05070d 100%);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(88,166,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(88,166,255,.045) 1px,transparent 1px);
+      background-size:48px 48px;
+      mask-image:linear-gradient(180deg,rgba(0,0,0,.65),transparent 75%);
+      z-index:0;
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto;position:relative;z-index:1}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(14px);
+      background:rgba(5,7,13,.72);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      width:min(var(--max),calc(100% - 40px));margin:0 auto;
+      display:flex;align-items:center;gap:22px;
+      min-height:64px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;color:var(--text)}
+    .brand img{width:28px;height:28px}
+    .brand span{color:var(--orange)}
+    .nav a{color:var(--muted);font-size:14px;font-weight:600}
+    .nav a:hover{color:var(--text);text-decoration:none}
+    .nav-right{margin-left:auto;display:flex;gap:14px;align-items:center}
+    .nav-cta{
+      border:1px solid rgba(255,159,67,.45);
+      background:rgba(255,159,67,.08);
+      color:#ffd7a8!important;
+      padding:8px 13px;border-radius:9px;
+    }
+    .hero{padding:58px 0 20px;position:relative}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--mono);font-size:12px;letter-spacing:.08em;
+      color:#ffb3b3;background:rgba(255,77,77,.08);
+      border:1px solid rgba(255,77,77,.35);
+      padding:6px 11px;border-radius:999px;
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);animation:pulse 1.8s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+    h1{
+      font-size:clamp(58px,9vw,124px);
+      line-height:.95;letter-spacing:.05em;margin:20px 0 10px;
+      background:linear-gradient(100deg,#fff 0%,#ffd7a8 38%,#ff8a8a 62%,#8fc7ff 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 0 32px rgba(255,77,77,.16));
+    }
+    .tagline{font-size:clamp(18px,2.2vw,26px);color:#f3d4b6;font-weight:600;margin:0 0 14px}
+    .lead{max-width:820px;color:var(--muted);font-size:17px}
+    .lead strong{color:var(--text)}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 30px}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:12px 18px;border-radius:11px;font-weight:700;font-size:14px;
+      border:1px solid var(--border);background:rgba(13,20,32,.75);color:var(--text);
+      transition:transform .15s ease,border-color .15s ease,background .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px);text-decoration:none;border-color:rgba(88,166,255,.45)}
+    .btn.primary{
+      background:linear-gradient(100deg,rgba(255,77,77,.9),rgba(255,159,67,.88));
+      color:#16070b;border-color:transparent;
+      box-shadow:0 10px 30px rgba(255,77,77,.22);
+    }
+    .btn.ghost{background:rgba(88,166,255,.07);border-color:rgba(88,166,255,.3);color:#bfe0ff}
+    .hero-card{
+      position:relative;border-radius:18px;overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 70px rgba(255,77,77,.08);
+      background:#060a11;
+    }
+    .hero-card img{display:block;width:100%;height:auto}
+    .stats{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+      margin:18px 0 0;
+    }
+    .stat{
+      background:var(--panel);border:1px solid var(--border);border-radius:13px;
+      padding:13px 15px;
+    }
+    .stat .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--dim)}
+    .stat .v{font-weight:800;font-size:16px;margin-top:2px}
+    .stat .v.green{color:var(--green)}
+    .stat .v.orange{color:var(--orange)}
+    .stat .v.blue{color:var(--blue)}
+    section{padding:56px 0 10px}
+    .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--orange);text-transform:uppercase}
+    h2{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:8px 0 12px;letter-spacing:-.01em}
+    .section-lead{color:var(--muted);max-width:860px;font-size:16px;margin:0 0 24px}
+    .grid{display:grid;gap:14px}
+    .grid.status{grid-template-columns:repeat(3,1fr)}
+    .grid.cards{grid-template-columns:repeat(3,1fr)}
+    .card{
+      background:var(--panel);border:1px solid var(--border);border-radius:15px;
+      padding:18px 18px 16px;position:relative;overflow:hidden;
+    }
+    .card::after{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(300px 140px at 100% 0%,rgba(88,166,255,.07),transparent 70%);
+    }
+    .card h3{margin:8px 0 6px;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .pill{
+      display:inline-flex;align-items:center;gap:7px;
+      font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+      padding:4px 9px;border-radius:999px;border:1px solid;
+    }
+    .pill.done{color:#8ff0a4;border-color:rgba(39,201,63,.38);background:rgba(39,201,63,.08)}
+    .pill.active{color:#ffc078;border-color:rgba(255,159,67,.42);background:rgba(255,159,67,.08)}
+    .pill.locked{color:#93a4b8;border-color:rgba(120,140,160,.28);background:rgba(120,140,160,.06)}
+    .pill.target{color:#ffb3b3;border-color:rgba(255,77,77,.45);background:rgba(255,77,77,.08)}
+    .progress{
+      margin:8px 0 22px;height:10px;border-radius:99px;background:#0b1320;
+      border:1px solid var(--border);overflow:hidden;
+    }
+    .progress > div{
+      height:100%;width:46%;
+      background:linear-gradient(90deg,var(--green),var(--orange),var(--blue));
+      box-shadow:0 0 18px rgba(255,159,67,.35);
+    }
+    .figure{
+      border:1px solid var(--border);border-radius:18px;overflow:hidden;
+      background:#060a11;box-shadow:0 24px 70px rgba(0,0,0,.45);
+    }
+    .figure img{display:block;width:100%;height:auto}
+    .caption{font-family:var(--mono);font-size:12px;color:var(--dim);padding:10px 14px;border-top:1px solid var(--border);background:rgba(5,7,13,.6)}
+    .callout{
+      display:grid;grid-template-columns:1.4fr .6fr;gap:18px;align-items:center;
+      margin-top:16px;padding:20px;border-radius:16px;
+      background:linear-gradient(100deg,rgba(255,77,77,.10),rgba(255,159,67,.06));
+      border:1px solid rgba(255,77,77,.3);
+    }
+    .callout .big{font-size:26px;font-weight:800;margin:4px 0}
+    .callout .small{color:#d8a6a6;font-family:var(--mono);font-size:12px}
+    .table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    .table th,.table td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(88,166,255,.1);font-size:14px}
+    .table th{background:rgba(88,166,255,.07);color:#bfe0ff;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    .table tr:last-child td{border-bottom:none}
+    .table td{color:var(--muted)}
+    .table td strong{color:var(--text)}
+    .faq{display:grid;gap:10px}
+    details{
+      background:var(--panel);border:1px solid var(--border);border-radius:12px;
+      padding:14px 16px;
+    }
+    summary{cursor:pointer;font-weight:700;color:var(--text)}
+    details p{color:var(--muted);margin:10px 0 0;font-size:14px}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    footer{
+      margin-top:70px;padding:28px 0 46px;border-top:1px solid var(--border);
+      color:var(--dim);font-size:13px;
+    }
+    footer .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+    .mono{font-family:var(--mono)}
+    .grad{background:linear-gradient(100deg,#fff,#ffd7a8,#ff8a8a,#8fc7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    @media (max-width:900px){
+      .grid.status,.grid.cards{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:1fr 1fr}
+      .callout{grid-template-columns:1fr}
+      .nav a:not(.nav-cta){display:none}
+    }
+    @media (max-width:600px){
+      .grid.status,.grid.cards{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .nav-inner{min-height:58px}
+      h1{letter-spacing:.02em}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .dot{animation:none}
+      .btn{transition:none}
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><img src="../assets/logo.svg" alt="">HID<span>RA</span></a>
+    <a href="#status">Status</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#devices">Devices</a>
+    <a href="#faq">FAQ</a>
+    <div class="nav-right">
+      <a class="nav-cta" href="https://github.com/nenasevartem70-cmyk/hidra">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="hero wrap">
+    <span class="chip"><span class="dot"></span>RESEARCH · NO PUBLIC BUILD YET</span>
+    <h1>HIDRA</h1>
+    <p class="tagline">A12 / iOS 18.7.2 — from AppleJPEGDriver UAF to kernel r/w.</p>
+    <p class="lead">
+      Hidra is a research jailbreak project for <strong>iPhone XR (A12) on iOS 18.7.2</strong>.
+      The kernel entry is <strong>CVE-2026-20687</strong> in AppleJPEGDriver. The current
+      rung is a controlled free and a same-type reclaim — not a jailbreak yet.
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="https://github.com/nenasevartem70-cmyk/hidra">Repository</a>
+      <a class="btn ghost" href="https://github.com/nenasevartem70-cmyk/hidgate-poc">Research base</a>
+      <a class="btn" href="#roadmap">Release estimate</a>
+    </div>
+
+    <div class="hero-card">
+      <img src="../assets/banner.svg" alt="HIDRA — A12 / iOS 18.7.2 kernel control research">
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">S0–S3</div><div class="v green">DONE</div></div>
+      <div class="stat"><div class="k">S4</div><div class="v orange">IN PROGRESS</div></div>
+      <div class="stat"><div class="k">PUBLIC BETA</div><div class="v blue">Q3 2027</div></div>
+      <div class="stat"><div class="k">TARGET</div><div class="v">A12 · 18.7.2</div></div>
+    </div>
+  </header>
+
+  <section id="status" class="wrap">
+    <div class="kicker">Current state</div>
+    <h2>Crash → Control → Jailbreak</h2>
+    <p class="section-lead">
+      Green stages are demonstrated on hardware. Orange is active research.
+      Gray is not started. The project does not claim kernel r/w until S4 is real.
+    </p>
+    <div class="progress"><div></div></div>
+    <div class="grid status">
+      <div class="card"><span class="pill done">S0 · DONE</span><h3>Entry</h3><p>AppleJPEGDriver userclient opens from the app sandbox; the 0x58 decode ABI works.</p></div>
+      <div class="card"><span class="pill done">S1 · DONE</span><h3>Deferred UAF</h3><p>Freed <span class="mono">JpegRequest</span> is read by a later queue walk. <span class="mono">far=0x308</span>, poison <span class="mono">0xfeedface…</span>.</p></div>
+      <div class="card"><span class="pill done">S2 · DONE</span><h3>Controlled free</h3><p>A true sync decode hits the 10 s wait: <span class="mono">kIOReturnTimeout</span>, <span class="mono">dt=10.001s</span>.</p></div>
+      <div class="card"><span class="pill done">S3 · DONE</span><h3>Same-type reclaim</h3><p>Ten async requests after the timeout reuse the freed slot; the kernel survives.</p></div>
+      <div class="card"><span class="pill active">S4 · IN PROGRESS</span><h3>Kernel primitive</h3><p>Double-free, IOSurface/UC refcount corruption, or a write through the queue node.</p></div>
+      <div class="card"><span class="pill locked">S5 · NOT STARTED</span><h3>KASLR</h3><p>Standard leak surfaces are clean on 18.7.2. Needs a kernel read or side channel.</p></div>
+      <div class="card"><span class="pill locked">S6 · NOT STARTED</span><h3>PAC</h3><p>A12 is arm64e. The <span class="mono">autda</span>/<span class="mono">blraa</span> call blocks a naive fake vtable.</p></div>
+      <div class="card"><span class="pill locked">S7 · NOT STARTED</span><h3>PPL / SPTM</h3><p>Page tables and kernel text are protected. Needs a data-only or patch primitive.</p></div>
+      <div class="card"><span class="pill target">S8 · TARGET</span><h3>Package</h3><p>Semi-tethered bootstrap, package manager, recovery path. No public build yet.</p></div>
+    </div>
+  </section>
+
+  <section id="architecture" class="wrap">
+    <div class="kicker">Exploit chain</div>
+    <h2>How Hidra gets in</h2>
+    <p class="section-lead">
+      The entry is an app. The bug is a decoder timeout. The goal is a controlled
+      kernel primitive, then KASLR/PAC/PPL, then a bootstrap.
+    </p>
+    <div class="figure">
+      <img src="../assets/architecture.svg" alt="Hidra exploit chain from S0 entry to S8 package">
+      <div class="caption">S0–S3 demonstrated on iPhone XR 18.7.2 · S4 active · S5–S8 planned</div>
+    </div>
+    <div class="grid cards" style="margin-top:14px">
+      <div class="card"><h3>1 · Entry</h3><p><span class="mono">IOServiceOpen("AppleJPEGDriver", 0)</span> from a sideloaded app. No entitlement required on this target.</p></div>
+      <div class="card"><h3>2 · UAF</h3><p>Async decodes + close, or a forced sync timeout, leave a freed <span class="mono">JpegRequest</span> in the per-codec queue.</p></div>
+      <div class="card"><h3>3 · Primitive</h3><p>Reclaim the slot with a same-type request, then turn the stale node into a double-free or write. This is the current gate.</p></div>
+    </div>
+  </section>
+
+  <section id="roadmap" class="wrap">
+    <div class="kicker">Release plan</div>
+    <h2>No promise. A target window.</h2>
+    <p class="section-lead">
+      The date is a research estimate. It moves if a gate fails. A build that
+      only panics is not a release.
+    </p>
+    <div class="figure">
+      <img src="../assets/roadmap.svg" alt="Hidra roadmap — Q2 2027 closed beta, Q3 2027 public beta">
+      <div class="caption">M4 write primitive → M5 KASLR/PAC → M6 PPL/SPTM → M7 closed beta → M8 public beta</div>
+    </div>
+    <div class="callout">
+      <div>
+        <div class="kicker">Possible release window</div>
+        <div class="big">Q3 2027 · public beta</div>
+        <div class="small">closed beta target: Q2 2027 · only if M4–M6 pass</div>
+      </div>
+      <div class="small">
+        If PAC or PPL cannot be bypassed, Hidra may ship as a kernel r/w
+        research toolkit instead of a jailbreak.
+      </div>
+    </div>
+  </section>
+
+  <section id="devices" class="wrap">
+    <div class="kicker">Support matrix</div>
+    <h2>One device first</h2>
+    <p class="section-lead">The project starts with the hardware we can test. Everything else is later.</p>
+    <table class="table">
+      <thead><tr><th>Device</th><th>SoC</th><th>iOS</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td><strong>iPhone XR (iPhone11,8)</strong></td><td>A12 / T8020</td><td>18.7.2 (22H124)</td><td><span class="pill done">PRIMARY</span></td></tr>
+        <tr><td>iPhone XS / XS Max</td><td>A12</td><td>18.7.x</td><td><span class="pill locked">UNTESTED</span></td></tr>
+        <tr><td>iPhone 11 / SE 2</td><td>A13</td><td>18.7.x</td><td><span class="pill locked">UNTESTED</span></td></tr>
+        <tr><td>iPhone 12 and newer</td><td>A14+</td><td>any</td><td><span class="pill locked">NOT INITIAL</span></td></tr>
+        <tr><td>iOS 18.7.7+ / 26.4+</td><td>—</td><td>—</td><td><span class="pill target">PATCHED</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="faq" class="wrap">
+    <div class="kicker">Questions</div>
+    <h2>FAQ</h2>
+    <div class="faq">
+      <details open><summary>Is Hidra a working jailbreak?</summary><p>No. It is the research project that aims to become one. The current state is a kernel UAF and a controlled same-type reclaim. There is no kernel r/w yet.</p></details>
+      <details><summary>Which device is supported?</summary><p>iPhone XR (A12) on iOS 18.7.2 is the primary test device. Other A12/A13 devices on 18.7.x are untested. iOS 18.7.7+ and 26.4+ are patched.</p></details>
+      <details><summary>Is it tethered?</summary><p>The first target is semi-tethered: the device boots normally, the user launches Hidra after a reboot, and the bootstrap is reapplied.</p></details>
+      <details><summary>When will it be released?</summary><p>Current estimate: closed beta Q2 2027, public beta Q3 2027, only if the write primitive, KASLR/PAC, and PPL stages pass. There is no promised date.</p></details>
+      <details><summary>Will it bypass iCloud or activation locks?</summary><p>No. Hidra targets owned devices with a normal sideloading setup. It does not bypass activation locks, iCloud locks, or MDM.</p></details>
+      <details><summary>Why the name Hidra?</summary><p>Hydra: many heads, many paths into the kernel. The project started with HID (IOHIDFamily) and continued through AppleJPEGDriver. The kernel entry stage is codenamed JPEGSWORD.</p></details>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker">Research base</div>
+    <h2>Everything is documented</h2>
+    <p class="section-lead">The PoCs, panic logs, control ladder, and test matrix live in the research repository.</p>
+    <div class="links">
+      <a class="btn primary" href="https://github.com/nenasevartem70-cmyk/hidgate-poc">hidgate-poc</a>
+      <a class="btn" href="https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/kernel-control.md">Control ladder</a>
+      <a class="btn" href="https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/final-tests.md">Final tests</a>
+      <a class="btn" href="https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/applejpeg-panic-2026-10-30.md">AppleJPEG panic</a>
+      <a class="btn" href="https://support.apple.com/en-us/126793">Apple advisory</a>
+      <a class="btn" href="https://github.com/0xjohnnydev/CVE-2026-20687-AppleJPEGDriver-UAF">Public PoC</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>MIT licensed · security research on devices you own · not a jailbreak yet</div>
+    <div class="mono" style="color:#ffb86b">CRASH → CONTROL → JAILBREAK</div>
+  </div>
+</footer>
+
+</body>
+</html>

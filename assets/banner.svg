@@ -1,59 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="HIDRA — A12 / iOS 18.7.2 kernel control research">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="HIDRA — A12 / iOS 18.7.2 kernel control research">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#070b12"/>
-      <stop offset="0.55" stop-color="#0b1220"/>
-      <stop offset="1" stop-color="#120a14"/>
+      <stop offset="0" stop-color="#04060b"/>
+      <stop offset="0.5" stop-color="#08101d"/>
+      <stop offset="1" stop-color="#140811"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#ff4d4d"/>
-      <stop offset="0.55" stop-color="#ff9f43"/>
-      <stop offset="1" stop-color="#58a6ff"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="0.78" cy="0.42" r="0.55">
-      <stop offset="0" stop-color="#ff4d4d" stop-opacity="0.28"/>
-      <stop offset="0.5" stop-color="#ff9f43" stop-opacity="0.08"/>
+    <radialGradient id="glowRed" cx="0.82" cy="0.35" r="0.5">
+      <stop offset="0" stop-color="#ff3b5c" stop-opacity="0.32"/>
+      <stop offset="0.55" stop-color="#ff7a18" stop-opacity="0.08"/>
       <stop offset="1" stop-color="#000000" stop-opacity="0"/>
     </radialGradient>
-    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6"/>
+    <radialGradient id="glowBlue" cx="0.15" cy="0.8" r="0.55">
+      <stop offset="0" stop-color="#2f81f7" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#ffd7a8"/>
+      <stop offset="0.75" stop-color="#ff7a7a"/>
+      <stop offset="1" stop-color="#7cc4ff"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff3b5c"/>
+      <stop offset="0.5" stop-color="#ff9f43"/>
+      <stop offset="1" stop-color="#58a6ff"/>
+    </linearGradient>
+    <filter id="blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4"/>
     </filter>
   </defs>
 
-  <rect width="1200" height="300" fill="url(#bg)"/>
-  <rect width="1200" height="300" fill="url(#glow)"/>
+  <rect width="1280" height="360" fill="url(#bg)"/>
+  <rect width="1280" height="360" fill="url(#glowRed)"/>
+  <rect width="1280" height="360" fill="url(#glowBlue)"/>
 
-  <!-- grid -->
-  <g stroke="#1b2a3a" stroke-opacity="0.55" stroke-width="1">
-    <path d="M0 60 H1200 M0 120 H1200 M0 180 H1200 M0 240 H1200"/>
-    <path d="M80 0 V300 M160 0 V300 M240 0 V300 M320 0 V300 M400 0 V300 M480 0 V300 M560 0 V300 M640 0 V300 M720 0 V300 M800 0 V300 M880 0 V300 M960 0 V300 M1040 0 V300 M1120 0 V300"/>
+  <g stroke="#162336" stroke-opacity="0.7" stroke-width="1">
+    <path d="M0 72 H1280 M0 144 H1280 M0 216 H1280 M0 288 H1280"/>
+    <path d="M96 0 V360 M192 0 V360 M288 0 V360 M384 0 V360 M480 0 V360 M576 0 V360 M672 0 V360 M768 0 V360 M864 0 V360 M960 0 V360 M1056 0 V360 M1152 0 V360"/>
   </g>
 
-  <!-- hydra / circuit motif on the right -->
-  <g fill="none" stroke="url(#accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
-    <path d="M900 210 C860 210 850 175 820 175 C790 175 785 145 755 145"/>
-    <path d="M900 210 C880 180 900 150 930 140 C960 130 965 105 995 100"/>
-    <path d="M900 210 C930 215 945 235 975 235 C1005 235 1010 260 1040 265"/>
-    <path d="M900 210 C870 230 865 255 835 260"/>
-    <path d="M900 210 C900 175 875 165 870 135"/>
+  <!-- hydra circuit -->
+  <g fill="none" stroke="url(#line)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
+    <path d="M985 220 C930 220 920 178 875 178 C830 178 825 138 790 138"/>
+    <path d="M985 220 C960 186 982 150 1020 138 C1058 126 1064 94 1100 88"/>
+    <path d="M985 220 C1020 226 1038 250 1074 250 C1110 250 1116 278 1152 284"/>
+    <path d="M985 220 C950 242 944 272 908 278"/>
+    <path d="M985 220 C985 182 956 170 950 136"/>
   </g>
-  <g fill="#0b1220" stroke="url(#accent)" stroke-width="2">
-    <circle cx="900" cy="210" r="18"/>
-    <circle cx="755" cy="145" r="7"/>
-    <circle cx="995" cy="100" r="7"/>
-    <circle cx="1040" cy="265" r="7"/>
-    <circle cx="835" cy="260" r="7"/>
-    <circle cx="870" cy="135" r="7"/>
+  <g fill="#070b12" stroke="url(#line)" stroke-width="3">
+    <circle cx="985" cy="220" r="22"/>
+    <circle cx="790" cy="138" r="9"/>
+    <circle cx="1100" cy="88" r="9"/>
+    <circle cx="1152" cy="284" r="9"/>
+    <circle cx="908" cy="278" r="9"/>
+    <circle cx="950" cy="136" r="9"/>
   </g>
-  <circle cx="900" cy="210" r="30" fill="#ff4d4d" opacity="0.18" filter="url(#soft)"/>
+  <circle cx="985" cy="220" r="46" fill="#ff3b5c" opacity="0.22" filter="url(#blur)"/>
+  <circle cx="985" cy="220" r="12" fill="#ffd7a8"/>
 
-  <!-- text -->
-  <text x="72" y="132" fill="#f4f7fb" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="92" font-weight="800" letter-spacing="10">HIDRA</text>
-  <text x="76" y="178" fill="#ffb86b" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21" font-weight="600" letter-spacing="3">A12 / iOS 18.7.2 — KERNEL CONTROL RESEARCH</text>
-  <text x="76" y="222" fill="#8fa3b8" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="16">kernel entry: AppleJPEGDriver CVE-2026-20687 · JPEGSWORD</text>
+  <!-- wordmark -->
+  <text x="80" y="156" fill="url(#word)" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="14">HIDRA</text>
+  <text x="84" y="204" fill="#ffb86b" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="3.5">A12 / iOS 18.7.2 — KERNEL CONTROL RESEARCH</text>
+  <text x="84" y="240" fill="#8fa3b8" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="16">kernel entry: AppleJPEGDriver CVE-2026-20687 · codename JPEGSWORD</text>
 
-  <rect x="72" y="246" width="430" height="2" fill="url(#accent)" opacity="0.9"/>
-  <text x="72" y="278" fill="#c9d6e4" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="2">CRASH → CONTROL → JAILBREAK</text>
+  <!-- chips -->
+  <g font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="600">
+    <rect x="84" y="272" width="176" height="30" rx="15" fill="#1a0d10" stroke="#ff4d4d" stroke-opacity="0.65"/>
+    <text x="172" y="292" fill="#ff8a8a" text-anchor="middle">CVE-2026-20687</text>
+    <rect x="272" y="272" width="128" height="30" rx="15" fill="#1a140b" stroke="#ff9f43" stroke-opacity="0.65"/>
+    <text x="336" y="292" fill="#ffc078" text-anchor="middle">JPEGSWORD</text>
+    <rect x="412" y="272" width="170" height="30" rx="15" fill="#0b1219" stroke="#58a6ff" stroke-opacity="0.65"/>
+    <text x="497" y="292" fill="#8fc7ff" text-anchor="middle">NO PUBLIC BUILD</text>
+  </g>
 
-  <text x="1128" y="286" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="end">research · no public build</text>
+  <rect x="84" y="322" width="520" height="2" fill="url(#line)" opacity="0.9"/>
+  <text x="84" y="348" fill="#c9d6e4" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="2">CRASH → CONTROL → JAILBREAK</text>
+  <text x="1196" y="348" fill="#5f7186" font-family="Consolas, SFMono-Regular, Menlo, monospace" font-size="12" text-anchor="end">research · owned devices only</text>
 </svg>

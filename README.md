@@ -43,20 +43,9 @@ jailbreak yet.
 
 ## How it will work
 
-```mermaid
-flowchart LR
-    A[Sideloaded app] --> B[AppleJPEGDriver userclient]
-    B --> C[Prime async decodes]
-    C --> D[Sync decode + 10 s timeout]
-    D --> E[Freed JpegRequest + stale queue node]
-    E --> F[Same-type reclaim]
-    F --> G[Double-free / write primitive]
-    G --> H[KASLR leak]
-    H --> I[PAC bypass]
-    I --> J[PPL / SPTM bypass]
-    J --> K[Kernel patch + bootstrap]
-    K --> L[Hidra package]
-```
+<p align="center">
+  <img src="assets/architecture.svg" alt="Hidra exploit chain: S0 entry to S8 package" width="100%">
+</p>
 
 ### Stage 0 — Entry
 
@@ -150,6 +139,10 @@ and will slip if a stage fails.
 | M7 | **Q2 2027** | closed beta on iPhone XR 18.7.2 | low |
 | M8 | **Q3 2027** | public beta, if M4–M6 pass | low |
 
+<p align="center">
+  <img src="assets/roadmap.svg" alt="Hidra roadmap: closed beta Q2 2027, public beta Q3 2027" width="100%">
+</p>
+
 **Possible public release window: Q3 2027.** This is not a promise. If PAC or
 PPL cannot be bypassed, Hidra may ship as a kernel r/w research toolkit
 instead of a jailbreak.
@@ -160,12 +153,17 @@ instead of a jailbreak.
 hidra/
   README.md
   docs/
+    index.html           # dark landing page (GitHub Pages)
     architecture.md      # exploit chain, stage by stage
     roadmap.md           # milestones, dates, exit criteria
     faq.md               # device/support questions
   assets/
     banner.svg
+    logo.svg
+    architecture.svg
+    roadmap.svg
   SECURITY.md
+  CONTRIBUTING.md
   LICENSE
 ```
 
@@ -182,6 +180,16 @@ The research base, PoCs, panic logs, and test matrix live in
 - [Apple security content, iOS 18.7.7](https://support.apple.com/en-us/126793)
 - [CVE-2026-20687](https://www.cve.org/CVERecord?id=CVE-2026-20687)
 - [Public AppleJPEG PoC](https://github.com/0xjohnnydev/CVE-2026-20687-AppleJPEGDriver-UAF)
+
+## Project page
+
+The dark landing page lives in `docs/` and is served by GitHub Pages:
+
+**https://nenasevartem70-cmyk.github.io/hidra/**
+
+Instant preview without Pages:
+
+**https://raw.githack.com/nenasevartem70-cmyk/hidra/main/docs/index.html**
 
 ## FAQ
 
