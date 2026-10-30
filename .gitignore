@@ -1,0 +1,17 @@
+# build outputs
+build/
+*.ipa
+*.app/
+Payload/
+*.o
+*.dSYM/
+
+# local test data
+*.log
+panic-full-*.ips
+*.ips
+
+# editor / OS
+.DS_Store
+Thumbs.db
+*.swp
