@@ -164,6 +164,23 @@ A fake `task_t` needs a signed vtable pointer for its address. Options:
 
 Without one of these, the `blraa` path is not usable.
 
+### Data-only strategy
+
+The planned path avoids PAC entirely:
+
+- do **not** patch kernel text (KTRR/CPRR-class protection);
+- do **not** modify page tables unless a step absolutely requires it (PPL);
+- modify writable data that controls security policy:
+  - `proc` / `task` / `p_ucred`;
+  - `kauth_cred_t` (uid/gid, groups, entitlements);
+  - code-signing flags (`csflags`, `CS_DEBUGGED`, `CS_PLATFORM_BINARY`);
+  - AMFI / MACF policy data;
+  - launchd/bootstrap data.
+
+The goal is to make the kernel trust a process or launchd child, not to
+execute a forged function pointer. Details:
+[`hidgate-poc/docs/data-only-plan.md`](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/data-only-plan.md).
+
 ## Stage 7 — PPL / SPTM
 
 Kernel text and page tables are protected. A jailbreak needs to:
