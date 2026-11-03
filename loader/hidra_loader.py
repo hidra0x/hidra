@@ -101,15 +101,45 @@ def info(args: argparse.Namespace) -> int:
     return 0
 
 
+def resolve_bundle(args: argparse.Namespace, requested: str) -> str:
+    """The sideload tool prefixes the bundle ID with the team ID.
+
+    Try the requested ID first, then scan `apps list` for a key containing
+    'hidgate4' or 'candprobe'. Returns the requested ID if nothing matches.
+    """
+    if args.dry_run:
+        return requested
+    cmd = pmd3_base(args) + ["apps", "list"]
+    if args.udid:
+        cmd += ["--udid", args.udid]
+    cp = run(cmd, dry=False)
+    if cp.returncode == 0 and cp.stdout:
+        # `apps list` is JSON but can contain invalid backslash escapes in
+        # paths, so use a regex over the raw text instead of json.loads.
+        if f'"{requested}"' in cp.stdout:
+            return requested
+        m = re.search(r'"([^"]*(?:hidgate4|candprobe|hidra)[^"]*)"\s*:', cp.stdout, re.I)
+        if m:
+            print(f"resolved bundle: {m.group(1)}")
+            return m.group(1)
+    return requested
+
+
 def launch(args: argparse.Namespace) -> int:
-    cmd = pmd3_base(args) + ["apps", "launch", args.bundle]
+    # pymobiledevice3 11.x has no `apps launch`. The DVT launch service is
+    # the one that works on the test device (Developer Mode + mounted DDI +
+    # --userspace tunnel).
+    bundle = resolve_bundle(args, args.bundle)
+    cmd = pmd3_base(args) + ["developer", "dvt", "launch", "--userspace", bundle]
     if args.udid:
         cmd += ["--udid", args.udid]
     cp = run(cmd, args.dry_run)
     if cp.returncode != 0:
         eprint(cp.stderr.strip())
-        eprint("If 'apps launch' is not supported by your pymobiledevice3 version,")
-        eprint("use:  pymobiledevice3 developer dvt launch " + args.bundle)
+        eprint("Launch failed. You can also unlock the device and tap CandProbe")
+        eprint("manually while the loader is capturing syslog.")
+        eprint("If the DeveloperDiskImage is not mounted, run:")
+        eprint("  python -m pymobiledevice3 mounter auto-mount")
         return cp.returncode
     print(cp.stdout.strip())
     return 0
@@ -179,9 +209,16 @@ def jailbreak(args: argparse.Namespace) -> int:
             eprint("The IPA must be signed for this device. The research builds are unsigned.")
             return cp.returncode
 
+    # Try to mount the DeveloperDiskImage; without it CoreDevice launch fails.
+    mount_cmd = pmd3_base(args) + ["mounter", "auto-mount"]
+    if args.udid:
+        mount_cmd += ["--udid", args.udid]
+    run(mount_cmd, args.dry_run, check=False)
+
     rc = launch(args)
     if rc != 0:
-        return rc
+        print("\nLaunch automation failed. Unlock the device and tap CandProbe")
+        print("manually; syslog capture will continue.")
 
     print()
     log_path = Path(args.out)
