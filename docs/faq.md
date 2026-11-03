@@ -75,12 +75,12 @@ is codenamed **JPEGSWORD**.
 ## Where is the research?
 
 The PoCs, test matrix, and panic analysis live in
-[`hidgate-poc`](https://github.com/nenasevartem70-cmyk/hidgate-poc):
+[`hidgate-poc`](https://github.com/hidra0x/hidgate-poc):
 
-- [Kernel control ladder](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/kernel-control.md)
-- [Final tests](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/final-tests.md)
-- [AppleJPEG CVE notes](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/applejpeg-cve-2026-20687.md)
-- [Experiment log](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/experiment-log.md)
+- [Kernel control ladder](https://github.com/hidra0x/hidgate-poc/blob/main/docs/kernel-control.md)
+- [Final tests](https://github.com/hidra0x/hidgate-poc/blob/main/docs/final-tests.md)
+- [AppleJPEG CVE notes](https://github.com/hidra0x/hidgate-poc/blob/main/docs/applejpeg-cve-2026-20687.md)
+- [Experiment log](https://github.com/hidra0x/hidgate-poc/blob/main/docs/experiment-log.md)
 
 ## Is this DarkSword?
 

@@ -15,7 +15,7 @@
 
 Hidra is a research jailbreak project for A12 devices on iOS 18.7.2. It builds
 on the kernel UAF in `AppleJPEGDriver` (CVE-2026-20687) and the controlled
-free/reclaim work in [`hidgate-poc`](https://github.com/nenasevartem70-cmyk/hidgate-poc).
+free/reclaim work in [`hidgate-poc`](https://github.com/hidra0x/hidgate-poc).
 
 > **There is no public jailbreak build yet.**
 > Hidra is a research project, not a working jailbreak. It does not provide
@@ -40,6 +40,10 @@ CVE-2026-20687) is different:
 
 That is enough to start building a kernel primitive. It is not enough for a
 jailbreak yet.
+
+The open-source entry PoC is **MOON Probe**:
+[`hidgate-poc/PoC/applejpeg`](https://github.com/hidra0x/hidgate-poc/tree/main/PoC/applejpeg).
+It demonstrates the userclient, the 0x58 ABI, and the deferred UAF.
 
 ## How it will work
 
@@ -110,7 +114,7 @@ The package will ship as:
 | S7 | Package / bootstrap | **NOT STARTED** |
 
 The detailed control ladder is in
-[`hidgate-poc/docs/kernel-control.md`](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/kernel-control.md).
+[`hidgate-poc/docs/kernel-control.md`](https://github.com/hidra0x/hidgate-poc/blob/main/docs/kernel-control.md).
 
 Latest result: `jpegclose` (close the userclient during a sync decode)
 reproduces the `far=0x308` UAF **without Camera**. The paired reclaim still
@@ -172,15 +176,15 @@ hidra/
 ```
 
 The research base, PoCs, panic logs, and test matrix live in
-[`hidgate-poc`](https://github.com/nenasevartem70-cmyk/hidgate-poc).
+[`hidgate-poc`](https://github.com/hidra0x/hidgate-poc).
 
 ## Research base
 
-- [Kernel control ladder](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/kernel-control.md)
-- [Final test matrix](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/final-tests.md)
-- [AppleJPEG CVE notes](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/applejpeg-cve-2026-20687.md)
-- [AppleJPEG panic analysis](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/applejpeg-panic-2026-10-30.md)
-- [Experiment log](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/experiment-log.md)
+- [Kernel control ladder](https://github.com/hidra0x/hidgate-poc/blob/main/docs/kernel-control.md)
+- [Final test matrix](https://github.com/hidra0x/hidgate-poc/blob/main/docs/final-tests.md)
+- [AppleJPEG CVE notes](https://github.com/hidra0x/hidgate-poc/blob/main/docs/applejpeg-cve-2026-20687.md)
+- [AppleJPEG panic analysis](https://github.com/hidra0x/hidgate-poc/blob/main/docs/applejpeg-panic-2026-10-30.md)
+- [Experiment log](https://github.com/hidra0x/hidgate-poc/blob/main/docs/experiment-log.md)
 - [Apple security content, iOS 18.7.7](https://support.apple.com/en-us/126793)
 - [CVE-2026-20687](https://www.cve.org/CVERecord?id=CVE-2026-20687)
 - [Public AppleJPEG PoC](https://github.com/0xjohnnydev/CVE-2026-20687-AppleJPEGDriver-UAF)
@@ -189,11 +193,11 @@ The research base, PoCs, panic logs, and test matrix live in
 
 The dark landing page lives in `docs/` and is served by GitHub Pages:
 
-**https://nenasevartem70-cmyk.github.io/hidra/**
+**https://hidra0x.github.io/hidra/**
 
 Instant preview without Pages:
 
-**https://raw.githack.com/nenasevartem70-cmyk/hidra/main/docs/index.html**
+**https://raw.githack.com/hidra0x/hidra/main/docs/index.html**
 
 ## FAQ
 

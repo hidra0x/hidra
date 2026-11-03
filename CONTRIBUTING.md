@@ -37,7 +37,7 @@ Log / panic file:
 ## Development
 
 - The research base is
-  [`hidgate-poc`](https://github.com/nenasevartem70-cmyk/hidgate-poc).
+  [`hidgate-poc`](https://github.com/hidra0x/hidgate-poc).
 - Test builds are version-specific. Do not assume a build for 18.7.2 works on
   18.7.7+; the CVE is fixed there.
 - Keep changes small and reproducible. One commit should answer one question.

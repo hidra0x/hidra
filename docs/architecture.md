@@ -179,7 +179,7 @@ The planned path avoids PAC entirely:
 
 The goal is to make the kernel trust a process or launchd child, not to
 execute a forged function pointer. Details:
-[`hidgate-poc/docs/data-only-plan.md`](https://github.com/nenasevartem70-cmyk/hidgate-poc/blob/main/docs/data-only-plan.md).
+[`hidgate-poc/docs/data-only-plan.md`](https://github.com/hidra0x/hidgate-poc/blob/main/docs/data-only-plan.md).
 
 ## Stage 7 — PPL / SPTM
 
