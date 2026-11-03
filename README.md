@@ -100,6 +100,30 @@ The package will ship as:
 - an on-device bootstrap (launchd hook / substitute);
 - a desktop helper for install and recovery.
 
+## Semi-tethered loader
+
+The PC-side harness is in [`loader/`](loader/). It implements the
+semi-tethered loop:
+
+```
+reboot -> normal iOS -> run hidra_loader.py -> launch the agent
+      -> capture stage markers -> reapply the kernel patch
+```
+
+It uses `pymobiledevice3` for USB device info, app launch, and syslog. The
+current agent is CandProbe, which emits `HIDRA_STAGE0_DONE` through
+`HIDRA_STAGE8_DONE`. `HIDRA_JAILBROKEN` is reserved until a real kernel
+primitive lands.
+
+```bash
+python -m pip install pymobiledevice3
+python loader/hidra_loader.py doctor
+python loader/hidra_loader.py jailbreak --seconds 30
+```
+
+The loader is **not** a jailbreak by itself. It is the transport and test
+loop for the missing S4-S7 stages.
+
 ## Status
 
 | Stage | Component | State |
@@ -165,6 +189,9 @@ hidra/
     architecture.md      # exploit chain, stage by stage
     roadmap.md           # milestones, dates, exit criteria
     faq.md               # device/support questions
+  loader/
+    hidra_loader.py      # PC-side semi-tethered harness
+    README.md            # usage and limitations
   assets/
     banner.svg
     logo.svg
