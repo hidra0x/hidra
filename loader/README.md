@@ -32,13 +32,24 @@ overridden for different versions.
 
 ## Commands
 
-```bash
-python hidra_loader.py doctor
-python hidra_loader.py devices
-python hidra_loader.py info
-python hidra_loader.py launch --bundle com.example.hidgate4
-python hidra_loader.py syslog --seconds 30 --out logs/agent.log
-python hidra_loader.py jailbreak --seconds 30
+Run from the **repository root**, not from `C:\Users\<you>`:
+
+```bat
+cd C:\Users\Артем\hidra
+python loader\hidra_loader.py doctor
+python loader\hidra_loader.py devices
+python loader\hidra_loader.py info
+python loader\hidra_loader.py launch
+python loader\hidra_loader.py syslog --seconds 30 --out logs\agent.log
+python loader\hidra_loader.py jailbreak --seconds 300
+```
+
+The loader resolves the sideload team-ID suffix automatically, for example
+`com.example.hidgate4.H4UP99UW92`. On iOS 17+ it launches the agent with:
+
+```bat
+python -m pymobiledevice3 mounter auto-mount
+python -m pymobiledevice3 developer dvt launch --userspace <resolved-bundle>
 ```
 
 No device attached? Preview the commands:
